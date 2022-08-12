@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://s4hanads2.asia.tel.com:443/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="Common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://s4hanads2.asia.tel.com:443/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="Capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://s4hanads2.asia.tel.com:443/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZCDV_T_FITU005_CDS" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ZCDV_T_FITU005Type" sap:label="GRNI Consumption Data" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="ebeln"/>
+                    <PropertyRef Name="ebelp"/>
+                </Key>
+                <Property Name="ebeln" Type="Edm.String" Nullable="false" MaxLength="10" sap:display-format="UpperCase" sap:label="Purchase Order" sap:quickinfo="Purchasing Document Number"/>
+                <Property Name="ebelp" Type="Edm.String" Nullable="false" MaxLength="5" sap:display-format="NonNegative" sap:label="Item" sap:quickinfo="Item Number of Purchasing Document"/>
+                <Property Name="lifnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Supplier" sap:quickinfo="Vendor's account number"/>
+                <Property Name="bukrs" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="true" sap:label="Company Code" sap:value-list="standard"/>
+                <Property Name="matnr" Type="Edm.String" MaxLength="40" sap:display-format="UpperCase" sap:label="Material" sap:quickinfo="Material Number"/>
+                <Property Name="menge" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="PO quantity" sap:quickinfo="Purchase Order Quantity"/>
+                <Property Name="dmbtr" Type="Edm.Decimal" Precision="14" Scale="3" sap:label="GRNI Amount" sap:quickinfo="Amount in Local Currency"/>
+                <Property Name="aedat" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Last Txn Date" sap:quickinfo="Purchasing Document Item Change Date"/>
+                <Property Name="aedat_Year" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:required-in-filter="true" sap:label="Year"/>
+                <Property Name="aedat_Mon" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Period"/>
+                <Property Name="racct" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Ledger Cost" sap:quickinfo="Account Number"/>
+                <Property Name="budat" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="Last Rcpt Date" sap:quickinfo="Posting Date in the Document"/>
+                <Property Name="mseg_Year" Type="Edm.String" MaxLength="4" sap:display-format="UpperCase" sap:label="Last Rcpt Date Year"/>
+                <Property Name="mseg_Mon" Type="Edm.String" MaxLength="2" sap:display-format="UpperCase" sap:label="Last Rcpt Date Period"/>
+                <Property Name="mblnr" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="GR Document" sap:quickinfo="Number of Material Document"/>
+                <Property Name="menge1" Type="Edm.Decimal" Precision="13" Scale="3" sap:label="GR Quantity"/>
+                <Property Name="bldat" Type="Edm.DateTime" Precision="0" sap:display-format="Date" sap:label="GR creation date" sap:quickinfo="Document Date in Document"/>
+                <Property Name="difference" Type="Edm.Int32" sap:label="Ageing of GR Document(days)"/>
+                <Property Name="vbeln" Type="Edm.String" MaxLength="10" sap:display-format="UpperCase" sap:label="Inbound delivery" sap:quickinfo="Delivery"/>
+                <Property Name="vbelp" Type="Edm.String" MaxLength="6" sap:display-format="NonNegative" sap:label="Inbound delivery item" sap:quickinfo="Delivery Item"/>
+            </EntityType>
+            <EntityType Name="ZIDV_T_FITU005_02Type" sap:label="Company Code Search Help" sap:value-list="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="bukrs"/>
+                </Key>
+                <Property Name="bukrs" Type="Edm.String" Nullable="false" MaxLength="4" sap:display-format="UpperCase" sap:label="Company Code"/>
+                <Property Name="butxt" Type="Edm.String" MaxLength="25" sap:label="Company Name" sap:quickinfo="Name of Company Code or Company"/>
+            </EntityType>
+            <EntityContainer Name="ZCDV_T_FITU005_CDS_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ZCDV_T_FITU005" EntityType="ZCDV_T_FITU005_CDS.ZCDV_T_FITU005Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:requires-filter="true" sap:content-version="1"/>
+                <EntitySet Name="ZIDV_T_FITU005_02" EntityType="ZCDV_T_FITU005_CDS.ZIDV_T_FITU005_02Type" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1"/>
+            </EntityContainer>
+            <Annotations Target="ZCDV_T_FITU005_CDS.ZCDV_T_FITU005Type/bukrs" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.ValueList">
+                    <Record>
+                        <PropertyValue Property="Label" String="Company Code Search Help"/>
+                        <PropertyValue Property="CollectionPath" String="ZIDV_T_FITU005_02"/>
+                        <PropertyValue Property="SearchSupported" Bool="false"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="bukrs"/>
+                                    <PropertyValue Property="ValueListProperty" String="bukrs"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="butxt"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="ZCDV_T_FITU005_CDS.ZCDV_T_FITU005_CDS_Entities/ZCDV_T_FITU005" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="RequiredProperties">
+                            <Collection>
+                                <PropertyPath>bukrs</PropertyPath>
+                                <PropertyPath>aedat_Year</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="RequiresFilter" Bool="true"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <atom:link rel="self" href="https://s4hanads2.asia.tel.com:443/sap/opu/odata/sap/ZCDV_T_FITU005_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://s4hanads2.asia.tel.com:443/sap/opu/odata/sap/ZCDV_T_FITU005_CDS/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
